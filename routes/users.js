@@ -20,17 +20,19 @@ router.post('/', async (req, res) => {
         const collection = _db.collection("Usuarios");
         collection.insert({
             "user": req.body.user,
-            "password" : req.body.password
+            "password" : req.body.password,
+            "correo" : req.body.correo,
+            "telefono" : req.body.telefono
 
         },
         function(err, result) {
            
             if(err) {
                 console.log(err)
-                _db.close();
+                db.close();
                 return res.status(500).json(err);               
             }else{
-            _db.close();
+            db.close();
 
             const payload = {
                 check:  true
@@ -50,11 +52,43 @@ router.post('/', async (req, res) => {
     
     } catch (error) {
         console.log(error)
-        _db.close();
+        db.close();
         return res.status(500).json(error);
 
     }
 
 })
+
+
+router.get('/:usuario', async (req, res) => {
+    try {
+        const db=await connect()    
+        const _db=db.db("DB_FIX_IT")
+
+        const usuario_=req.params.usuario
+        const collection = _db.collection("Usuarios");
+        const query = { user : usuario_ };
+
+        collection.find(query).toArray(function(err, result) {
+            if (err) throw err;
+
+            db.close();
+            if (result.length==0){
+                return res.status(404).json("Not found")
+            }else{
+                return res.status(200).json(result[0])
+            }
+            
+          });     
+          
+    } catch (error) {
+        console.log(error)
+        db.close();
+        return res.status(500).json(error);
+
+    }
+
+})
+
 
 module.exports = router
