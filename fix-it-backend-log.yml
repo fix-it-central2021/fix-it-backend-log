@@ -1,0 +1,58 @@
+openapi: '3.0.2'
+info:
+  title: Fix-It-Backend-Log
+  version: '1.0.0'
+  contact:
+    email: bkevin1052@gmail.com
+  license:
+    name: NodeJs
+    url: https://nodejs.org/es/
+servers:
+    - url: https://api.server.test/v1
+  
+
+components:
+  schemas:
+    Usuarios:
+      type: object
+      properties:
+        user:
+          type: string
+        password:
+          type: string
+        correo:
+          type: string
+        telefono:
+          type: string
+paths:
+  /users:
+    get:
+      description: Obtener usuario
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not found
+        '500':
+          description: Error
+
+    post:
+      description: Registrar usuario
+      responses:
+        '200':
+          description: Autenticación correcta
+        '500':
+          description: Error
+
+  /login:
+    post:
+      description: Ingresar con usuario
+      responses:      
+        '200':
+          description: Autenticación correcta
+        '404':
+          description: Usuario o contraseña incorrectos
+        '500':
+          description: Error
+
+
