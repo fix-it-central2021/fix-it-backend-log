@@ -12,7 +12,12 @@ connect = async ()=>{
     
         connection_string = config.string_conexion
 
-        const client = new mongo_client(connection_string);
+        const client = new mongo_client(connection_string            
+            ,
+            { 
+                useNewUrlParser: true
+              }
+            );
 
         client.connect(
         (err) => {               
