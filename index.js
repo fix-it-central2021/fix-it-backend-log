@@ -18,6 +18,11 @@ app.use(function(req, res, next) {
   
 app.use('/login',Login)
 app.use('/users',usuarios)
+app.get('/health', async function (req,res) { 
+
+  return res.status(200).json("Health API");
+ })
+
 
 
 app.use(express.static('public'))
